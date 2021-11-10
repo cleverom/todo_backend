@@ -2,13 +2,14 @@ import createError, { HttpError } from 'http-errors';
 import express, {NextFunction, Request, Response} from 'express';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import cors from 'cors'
 
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 
 let app = express();
 
-
+app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
