@@ -80,7 +80,7 @@ const changeStatus = ((req: express.Request, res: express.Response, next: NextFu
     if (singleData) {
         const changeData = req.body;
 
-        singleData.done = changeData.done || singleData.done
+        singleData.done = changeData.done
         fs.writeFile(paths, JSON.stringify(database, null, 2), (err: any) => {
             if (err) throw err
         })

@@ -74,7 +74,7 @@ var changeStatus = (function (req, res, next) {
         res.status(404).json("data not found");
     if (singleData) {
         var changeData = req.body;
-        singleData.done = changeData.done || singleData.done;
+        singleData.done = changeData.done;
         fs_1.default.writeFile(paths, JSON.stringify(database, null, 2), function (err) {
             if (err)
                 throw err;
