@@ -85,11 +85,11 @@ var changeStatus = (function (req, res, next) {
 exports.changeStatus = changeStatus;
 var deleteData = (function (req, res, next) {
     var paths = path_1.default.join(__dirname, '../../database.json');
-    var singleData = database.find((function (c) { return parseInt(c.id) === parseInt(req.params.id); }));
+    var singleData = database.find((function (c) { return c.id === req.params.id; }));
     if (!singleData)
         res.status(404).send("data not found");
     if (singleData) {
-        database = database.filter(function (dat) { return parseInt(dat.id) !== parseInt(req.params.id); });
+        database = database.filter(function (dat) { return dat.id !== req.params.id; });
         res.json({ message: "data deleted", database: database });
         fs_1.default.writeFile(paths, JSON.stringify(database, null, 2), function (err) {
             if (err)

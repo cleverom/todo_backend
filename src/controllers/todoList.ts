@@ -92,10 +92,10 @@ const changeStatus = ((req: express.Request, res: express.Response, next: NextFu
 
 const deleteData = ((req: express.Request, res: express.Response, next: NextFunction) => {
     const paths = path.join(__dirname, '../../database.json')
-    const singleData = database.find(((c: any) => parseInt(c.id) === parseInt(req.params.id)));
+    const singleData = database.find(((c: any) => c.id === req.params.id));
     if (!singleData) res.status(404).send("data not found")
     if (singleData) {
-        database = database.filter((dat: any) => parseInt(dat.id) !== parseInt(req.params.id));
+        database = database.filter((dat: any) => dat.id !== req.params.id);
         res.json({ message: "data deleted", database });
 
         fs.writeFile(paths, JSON.stringify(database, null, 2), (err: any) => {
