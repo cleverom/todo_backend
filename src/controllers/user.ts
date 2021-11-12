@@ -40,7 +40,7 @@ async function createUser(req: Request, res: Response) {
             database.push(newData)
         }
         let newDatabase = JSON.stringify(database, null, 2)
-        fs.writeFile(paths, newDatabase, (err: any)=>{
+        fs.writeFile(paths, newDatabase, (err: unknown)=>{
             
         if(err) throw err
         })
@@ -68,7 +68,7 @@ async function login(req: Request, res: Response) {
             name: user.name,
             id: user.id
         };
-        jwt.sign(payload, "secret", (err: any, token: any) => {
+        jwt.sign(payload, "secret", (err: unknown, token) => {
             if (err) console.log(err);
             else return res.json({ token: token, status: true }).status(201);
         });

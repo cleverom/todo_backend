@@ -24,7 +24,7 @@ const getAll = ((req: express.Request, res: express.Response, next: NextFunction
 })
 
 const getData = ((req: express.Request, res: express.Response, next: NextFunction) => {
-    const singleData = database.find((c: any) => c.id === req.params.id)
+    const singleData = database.find((c: Record<string, unknown>) => c.id === req.params.id)
     if (!singleData) res.status(404).send("data not found")
     res.json(singleData)
 })
@@ -48,7 +48,7 @@ const postData = ((req: express.Request, res: express.Response, next: NextFuncti
         database.push(newData)
     }
     let newDatabase = JSON.stringify(database, null, 2)
-    fs.writeFile(paths, newDatabase, (err: any) => {
+    fs.writeFile(paths, newDatabase, (err: unknown) => {
 
         if (err) throw err
     })
@@ -58,14 +58,14 @@ const postData = ((req: express.Request, res: express.Response, next: NextFuncti
 
 const updateData = ((req: express.Request, res: express.Response, next: NextFunction) => {
     const paths = path.join(__dirname, '../../database.json')
-    const singleData = database.find((c: any) => c.id === req.params.id);
+    const singleData = database.find((c: Record<string, unknown>) => c.id === req.params.id);
     if (!singleData) res.status(404).json("data not found");
     if (singleData) {
         const changeData = req.body;
 
         singleData.todo = changeData.todo || singleData.todo
         singleData.dueDate = changeData.dueDtae || singleData.dueDate
-        fs.writeFile(paths, JSON.stringify(database, null, 2), (err: any) => {
+        fs.writeFile(paths, JSON.stringify(database, null, 2), (err: unknown) => {
             if (err) throw err
         })
     }
@@ -75,13 +75,13 @@ const updateData = ((req: express.Request, res: express.Response, next: NextFunc
 
 const changeStatus = ((req: express.Request, res: express.Response, next: NextFunction) => {
     const paths = path.join(__dirname, '../../database.json')
-    const singleData = database.find((c: any) => c.id === req.params.id);
+    const singleData = database.find((c: Record<string, unknown>) => c.id === req.params.id);
     if (!singleData) res.status(404).json("data not found");
     if (singleData) {
         const changeData = req.body;
 
         singleData.done = changeData.done
-        fs.writeFile(paths, JSON.stringify(database, null, 2), (err: any) => {
+        fs.writeFile(paths, JSON.stringify(database, null, 2), (err: unknown) => {
             if (err) throw err
         })
     }
@@ -92,13 +92,13 @@ const changeStatus = ((req: express.Request, res: express.Response, next: NextFu
 
 const deleteData = ((req: express.Request, res: express.Response, next: NextFunction) => {
     const paths = path.join(__dirname, '../../database.json')
-    const singleData = database.find(((c: any) => c.id === req.params.id));
+    const singleData = database.find(((c: Record<string, unknown>) => c.id === req.params.id));
     if (!singleData) res.status(404).send("data not found")
     if (singleData) {
-        database = database.filter((dat: any) => dat.id !== req.params.id);
+        database = database.filter((dat: Record<string, unknown>) => dat.id !== req.params.id);
         res.json({ message: "data deleted", database });
 
-        fs.writeFile(paths, JSON.stringify(database, null, 2), (err: any) => {
+        fs.writeFile(paths, JSON.stringify(database, null, 2), (err: unknown) => {
             if (err) throw err
         })
     }
